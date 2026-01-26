@@ -49,22 +49,24 @@ const LoginForm = () => {
     }
 
     return (  
-        <form onSubmit={(e) => handleLogin(e)} className="bg-white flex flex-col p-5 gap-5 w-[25%] max-sm:w-[70%] max-md:w-[50%] rounded">
-            <div className="flex flex-col gap-2">
-                <label htmlFor="email">Email: </label>
-                <input type="text" name="email" placeholder="Enter email address" className="border p-3 rounded border-gray-500"/>
-            </div>
-            <div className="flex flex-col gap-2">
-                <label htmlFor="password">password: </label>
-                <input type="password" name="password" placeholder="******" className="border p-3 rounded border-gray-500"/>
-            </div>
-            {loading ? (
-                <div className="bg-blue-400 font-bold text-white rounded p-3 select-none text-center">Loading...</div>
-            ): (
-                <button className="bg-green-500 font-bold text-white rounded p-3 cursor-pointer">Submit</button>
-            )}
+        <>
+            <form onSubmit={(e) => handleLogin(e)} className="bg-white flex flex-col p-5 gap-5 w-[25%] max-sm:w-[70%] max-md:w-[50%] rounded">
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="email">Email: </label>
+                    <input type="text" name="email" placeholder="Enter email address" className="border p-3 rounded border-gray-500"/>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="password">password: </label>
+                    <input type="password" name="password" placeholder="******" className="border p-3 rounded border-gray-500"/>
+                </div>
+                {loading ? (
+                    <div className="bg-blue-400 font-bold text-white rounded p-3 select-none text-center">Loading...</div>
+                ): (
+                    <button className="bg-green-500 font-bold text-white rounded p-3 cursor-pointer -translate-y-0.25 hover:translate-none duration-300">Submit</button>
+                )}
+            </form>
             <ToastContainer/>
-        </form>
+        </>
     );
 }
  
