@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@layer base{
+  body{
+    @apply font-sans
+  }
+}
+
+html{
+  scroll-behavior: smooth
+}
+
+body{
+  @apply bg-[rgb(11,11,11)];
+}
+
+.page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #71717a;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e4e4e7;
+}
+
+/* Dashboard phone view */
+.phoneOption{
+  @apply max-sm:fixed z-10 right-0 left-0 bottom-0 max-sm:w-full
+}
+
+.phoneOptionBtns{
+  @apply max-sm:text-[11px] max-sm:flex max-sm:justify-center
+}
+
+.phoneOptionBtns{
+  @apply max-sm:grid max-sm:grid-cols-3
+}
+
+.phoneOptionBtns li{
+  @apply max-sm:p-2 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center
+}
