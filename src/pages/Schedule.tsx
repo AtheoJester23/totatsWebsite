@@ -31,7 +31,6 @@ const Schedule = () => {
     
     const [future, setFuture] = useState<schedTypes>([])
     const [today, setToday] = useState<schedTypes>([])
-    const [current, setCurrent] = useState(0); 
 
     useEffect(() => {
         const getScheds = async () => {
@@ -81,7 +80,7 @@ const Schedule = () => {
                             {today.length > 0 ? (
                                 <div className='flex flex-col gap-1 h-[50vh] overflow-y-auto p-3 '>
                                     {today.map((item, index) => (
-                                        <div key={item.id} className={`border border-gray-500 rounded text-white p-5 ${compareTimeToNow(item.time, (index + 1 < today.length ? today[index + 1].time : minimalTime(item.time))) == 1 ? 'bg-white text-black!' : 'bg-none'}`}>
+                                        <div key={item.id} className={`border border-gray-500 rounded text-white p-5 ${compareTimeToNow(item.time, (index + 1 < today.length ? today[index + 1].time : minimalTime(item.time) || item.time)) == 1 ? 'bg-white text-black!' : 'bg-none'}`}>
                                             <h1 className='text-xl font-bold'>{item.category}</h1>
                                             <p className='text-[16px]'>{toReadableDate(item.date)}</p>
                                             <p className='text-[14px]'>{to12Hour(item.time)}</p>
