@@ -220,8 +220,8 @@ const SchedDetails = () => {
                     </div>
                     {!loading ? (
                         <>
-                            <button className="mt-2 bg-green-500 text-white p-3 font-bold rounded">Submit</button>
-                            <button type="button" onClick={() => setOpen(true)} className="mt-2 bg-red-500 text-white p-3 font-bold rounded">Delete</button>
+                            <button className="mt-2 bg-green-500 text-white p-3 font-bold rounded cursor-pointer hover:translate-y-0.5 duration-300">Submit</button>
+                            <button type="button" onClick={() => setOpen(true)} className="mt-2 bg-red-500 text-white hover:translate-y-0.5 p-3 font-bold rounded cursor-pointer duration-300">Delete</button>
                         </>
                     ):(
                         <div className="mt-2 bg-blue-400 text-white p-3 font-bold rounded">

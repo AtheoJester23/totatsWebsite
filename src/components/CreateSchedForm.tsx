@@ -82,7 +82,7 @@ const CreateSchedForm = () => {
             }
 
             toast.success('Successfully booked a session.')
-            navigate("/dashboard")
+            navigate("/schedule")
         } catch (error) {
             console.error((error as Error).message)
             toast.error('Failed to book a session.')
@@ -160,7 +160,7 @@ const CreateSchedForm = () => {
                     {errs.colored && (<small className="text-red-500">* Please select Yes or No.</small>)}
                 </div>
                 {!loading ? (
-                    <button className="mt-2 bg-green-500 text-white p-3 font-bold rounded">Submit</button>
+                    <button className="mt-2 bg-green-500 text-white p-3 font-bold rounded cursor-pointer hover:translate-y-0.5 duration-300">Submit</button>
                 ):(
                     <div className="mt-2 bg-blue-400 text-white p-3 font-bold rounded">
                         <p className="text-center">Loading</p>
