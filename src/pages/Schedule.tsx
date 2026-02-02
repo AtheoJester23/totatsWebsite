@@ -62,7 +62,7 @@ const Schedule = () => {
 
     return (  
          <div className="flex flex-col mt-30 items-center min-h-screen">
-            <h1 className='text-center text-2xl text-yellow-500 px-5'><strong>Note:</strong> the scedule below is not yet fully implemented, for more accurate schedule, please contact us through facebook messenger.</h1>
+            <h1 className='text-center text-2xl text-yellow-500 px-5'><strong>Note:</strong> The scedule below is not yet fully implemented, for more accurate schedule, please contact us through facebook messenger.</h1>
             
             <div className="w-full max-sm:h-[400px] max-w-4xl h-[500px] text-white p-4 rounded-lg shadow max-sm:m-5">
                 <FullCalendar
