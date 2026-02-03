@@ -52,3 +52,7 @@ body{
 .phoneOptionBtns li{
   @apply max-sm:p-2 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center
 }
+
+.smallChatBox{
+  @apply max-sm:w-[320px] max-sm:h-[500px]
+}

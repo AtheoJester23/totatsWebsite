@@ -9,11 +9,13 @@ import Dashboard from "./pages/Dashboard"
 import CreateSched from "./pages/CreateSched"
 import ProtectedRoute from "./components/ProtectedRoute"
 import SchedDetails from "./pages/SchedDetails"
+import Chatbot from "./components/Chatbot"
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar/>
+      <Chatbot/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/pricing" element={<Pricing/>}/>
