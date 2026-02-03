@@ -3,41 +3,27 @@ import Schedules from "../components/dashboard/Schedules";
 import { useState } from "react";
 import CreateSchedForm from "../components/CreateSchedForm";
 import { supabase } from "../supabaseClient";
+import { GoogleGenAI } from '@google/genai'
 
 const Dashboard = () => {
     const [selected, setSelected] = useState("schedules")
+    const ai = new GoogleGenAI({
+        apiKey: import.meta.env.VITE_API_KEY,
+        apiVersion: "v1beta"
+    })
 
     const handleTesting = async () => {
         try {
-            const {
-            data: { session },
-            error
-            } = await supabase.auth.getSession();
+            const response = await ai.models.generateContent({
+                model: "gemini-2.5-flash",
+                contents: "write a short funny joke"
+            });
 
-            if (error || !session) {
-            throw new Error("No session found");
-            }
-
-            const jwt = session.access_token;
-
-            const res = await fetch(
-            import.meta.env.VITE_TEST_SUPABASE_EDGE_FUNCTION,
-            {
-                method: "GET",
-                headers: {
-                Authorization: `Bearer ${jwt}`,
-                apikey: import.meta.env.VITE_SUPABASE_ANON_KEY // or NEXT_PUBLIC_*
-                }
-            }
-            );
-
-            const data = await res.json();
-            console.log("testing");
-            console.log(data);
+            console.log(response.text);
         } catch (error) {
-            console.error((error as Error).message);
+            console.log((error as Error).message)
         }
-        };
+    };
 
 
 
