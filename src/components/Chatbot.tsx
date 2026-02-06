@@ -1,7 +1,6 @@
 import { Bot, BotMessageSquare, Paperclip, SendHorizonal, X } from "lucide-react"
 import { useEffect, useRef, useState, type FormEvent } from "react"
 import { AnimatePresence, motion } from 'framer-motion'
-import { GoogleGenAI } from "@google/genai"
 
 type message = {
     role: string,
@@ -15,11 +14,6 @@ const Chatbot = () => {
     const [messages, setMessages] = useState<message>(
         [
             {role: "bot", message: "Magandang araw saiyo! Welcome sa TOTATS TATTOO SHOP official website! How can I help you today?"},
-            {role: "bot", message: "Magandang araw saiyo! Welcome sa TOTATS TATTOO SHOP official website! How can I help you today?"},
-            {role: "bot", message: "Magandang araw saiyo! Welcome sa TOTATS TATTOO SHOP official website! How can I help you today?"},
-            {role: "bot", message: "Magandang araw saiyo! Welcome sa TOTATS TATTOO SHOP official website! How can I help you today?"}, 
-            {role: "user", message: "testing"},
-            {role: "user", message: "testing"}
         ]
     )
     const chatRef = useRef<HTMLDivElement>(null)
@@ -43,68 +37,44 @@ const Chatbot = () => {
         let current = [...messages, {role: "user", message}]
         setMessages(current)
         
-        handleSimpleChatbot(message)
-
-        // setTimeout(() => {
-        //     setMessages(prev => [
-        //         ...prev,
-        //         { role: "bot", message: "This is a testing" }
-        //     ]);
-        // }, 2000)
-        
+        handleChatbot(message);
 
         e.currentTarget.reset();
     }
 
-    const ai = new GoogleGenAI({
-        apiKey: import.meta.env.VITE_API_KEY,
-        apiVersion: "v1beta"
-    })
-
-    const handleSimpleChatbot = async (content: string) => {
+    const handleChatbot = async (userInput: string) => {
         const id = Math.random().toString(36).substring(2, 9);
-        
+
         setMessages(prev => [
             ...prev,
             { role: "bot", message: "Thinking...", id}
         ]);
-        
-        try {
-            const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents: `${content}`
-            });
-
-            setMessages(prev => prev.map(m => m.id === id ? {...m, message: response.text || ""} : m))
-
-            console.log(response.text)
-        } catch (error) {
-            console.log((error as Error).message)
-        }
-    };
-
-    const handleSimpleImageUnderstanding = async () => {
-        const base64Image = await getBase64Image("/card3.png")
 
         try {
-            const contents = [
-                {
-                    inlineData: {
-                        mimeType: "image/png",
-                        data: base64Image
-                    },   
+            const res = await fetch(import.meta.env.VITE_AI_API, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
                 },
-                {text: "Classify this tatttoo as: minimalist, tribal, portrait, full sleeve, back piece, realism... don't explain why just answer with the correct category."}
-            ];
+                body: JSON.stringify({
+                    question: userInput
+                })
+            })
 
-            const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents
-            });
 
-            console.log(response.text);
+            if(!res.ok){
+                throw new Error(`${res.status}`)
+            }
+
+            const data = await res.json();
+
+            console.log(data);
+
+            setMessages(prev => prev.map(m => m.id === id ? {...m, message: data.reply || ""} : m))
+
         } catch (error) {
-            console.error((error as Error).message);
+            console.error((error as Error).message)
         }
     }
 
@@ -142,7 +112,7 @@ const Chatbot = () => {
                     <div
                         ref={chatRef}
                         data-lenis-prevent
-                        className="flex-1 overflow-y-auto px-4 py-2"
+                        className="flex-1 overflow-y-auto px-4 py-5 scrollbar-invisible"
                     >
                         <div
                             ref={spacerRef}
@@ -150,7 +120,7 @@ const Chatbot = () => {
                         >
                             <div ref={messagesRef} className="space-y-3 flex flex-col">
                                 {messages.map((m, i) => (
-                                    <div className={` flex items-end gap-3
+                                    <div key={i} className={` flex items-end gap-3
                                         ${m.role == "user" ? "justify-end" : "justify-start"}
                                     `}>
                                         {m.role != "user" &&
