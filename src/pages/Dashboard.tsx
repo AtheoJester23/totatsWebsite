@@ -49,7 +49,7 @@ const Dashboard = () => {
                                     <MoveLeft/>
                                 </button>
                             </div>
-                            <AddProducts/>
+                            <AddProducts setSelected={setSelected}/>
                         </div>
                     ):(
                         <PageNotFound/>
