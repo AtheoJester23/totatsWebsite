@@ -10,6 +10,7 @@ import CreateSched from "./pages/CreateSched"
 import ProtectedRoute from "./components/ProtectedRoute"
 import SchedDetails from "./pages/SchedDetails"
 import Chatbot from "./components/Chatbot"
+import Shop from './pages/Shop'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Dashboard/>
           </ProtectedRoute>
         }/>
+        <Route path="/shop" element={<Shop/>}/>
         <Route path="/editSched/:id" element={<SchedDetails/>}/>
         <Route path="/createSched" element={<CreateSched/>}/>
         <Route path="*" element={<PageNotFound/>}/>

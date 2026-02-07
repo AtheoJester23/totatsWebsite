@@ -56,3 +56,7 @@ body{
 .smallChatBox{
   @apply max-sm:w-[320px] max-sm:h-[500px]
 }
+
+.inputCombo{
+  @apply flex flex-col gap-2
+}

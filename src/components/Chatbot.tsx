@@ -79,7 +79,7 @@ const Chatbot = () => {
     }
 
   return (
-    <div className="max-sm:bottom-5 max-sm:right-5 fixed bottom-10 z-2000 right-10">
+    <div className="max-sm:bottom-15 max-sm:right-5 fixed bottom-10 z-2000 right-10">
         <AnimatePresence mode="wait">
             {!open ? (
                 <button onClick={() => setOpen(true)} className="bg-green-900 p-5 rounded-full cursor-pointer">
