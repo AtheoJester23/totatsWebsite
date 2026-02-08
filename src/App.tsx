@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import SchedDetails from "./pages/SchedDetails"
 import Chatbot from "./components/Chatbot"
 import Shop from './pages/Shop'
+import EditProduct from "./pages/EditProduct"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           </ProtectedRoute>
         }/>
         <Route path="/shop" element={<Shop/>}/>
+        <Route path="/edit/:id" element={<EditProduct/>}/>
         <Route path="/editSched/:id" element={<SchedDetails/>}/>
         <Route path="/createSched" element={<CreateSched/>}/>
         <Route path="*" element={<PageNotFound/>}/>

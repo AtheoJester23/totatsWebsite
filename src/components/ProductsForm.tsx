@@ -1,7 +1,8 @@
 import { X } from 'lucide-react'
-import React, { useRef, useState, type FormEvent } from 'react'
+import React, { useEffect, useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { supabase } from '../supabaseClient'
+import type { detailType } from './Products'
 
 type errsType = {
     name: boolean,
@@ -9,12 +10,14 @@ type errsType = {
     file: boolean
 }
 
-const AddProducts = ({setSelected}: {setSelected: (value: string) => void}) => {
+type selected = {
+    setSelected?: (value: string) => void
+}
+
+const ProductsForm = (choseSelected: selected) => {
     const [errs, setErrs] = useState<errsType>({name: false, price: false, file: false})
-    
+    const inputRef = useRef<HTMLInputElement>(null)
     const [theFile, setTheFile] = useState<File | null>(null)
-    const inputRef = useRef<HTMLInputElement | null>(null)
-        
 
     const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] ?? null
@@ -99,7 +102,9 @@ const AddProducts = ({setSelected}: {setSelected: (value: string) => void}) => {
 
             toast.success("Product added successfully!")
             
-            setSelected("shop")
+            if(choseSelected && choseSelected.setSelected){
+                choseSelected.setSelected("shop")
+            }
         } catch (error) {
             console.error((error as Error).message);
             toast.error("Something went wrong")
@@ -121,7 +126,11 @@ const AddProducts = ({setSelected}: {setSelected: (value: string) => void}) => {
             <div className='inputCombo'>
                 <label htmlFor="ItemPrice">Price:</label>
                 <div className='flex flex-col'>
-                    <input onChange={() => setErrs(prev => ({...prev, price: false}))} type="number" id="ItemPrice" name="ItemPrice" className={`border ${errs.price ? "border-red-500" : "border-gray-500"} p-5 rounded`} placeholder='0' defaultValue={0}/>
+                    <input
+                        onChange={(e) => {
+                            setErrs(prev => ({...prev, price: false}))
+                        }} 
+                        type="number" id="ItemPrice" name="ItemPrice" className={`border ${errs.price ? "border-red-500" : "border-gray-500"} p-5 rounded`} placeholder='0' />
                     {errs.price &&
                             <small className='text-red-500'>* Item price is required</small>
                     }
@@ -174,4 +183,4 @@ const AddProducts = ({setSelected}: {setSelected: (value: string) => void}) => {
   )
 }
 
-export default AddProducts
+export default ProductsForm

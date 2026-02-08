@@ -3,7 +3,7 @@ import Schedules from "../components/dashboard/Schedules";
 import { useState } from "react";
 import CreateSchedForm from "../components/CreateSchedForm";
 import Products from "../components/Products";
-import AddProducts from "../components/AddProducts";
+import ProductsForm from "../components/ProductsForm";
 import PageNotFound from "./PageNotFound";
 
 const Dashboard = () => {
@@ -49,7 +49,7 @@ const Dashboard = () => {
                                     <MoveLeft/>
                                 </button>
                             </div>
-                            <AddProducts setSelected={setSelected}/>
+                            <ProductsForm setSelected={setSelected}/>
                         </div>
                     ):(
                         <PageNotFound/>
