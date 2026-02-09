@@ -15,6 +15,7 @@ export type detailType = {
     id: string,
     name: string,
     image_url: string,
+    image_name: string,
     price: number,
     created_at: string
 }

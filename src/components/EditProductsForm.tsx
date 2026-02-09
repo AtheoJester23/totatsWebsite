@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { supabase } from '../supabaseClient'
 import type { detailType } from './Products'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 
 type errsType = {
@@ -24,6 +24,7 @@ const EditProductsForm = (choseSelected: selected) => {
 
     const [details, setDetails] = useState<detailType | null>(null)
     const [currentImg, setCurrentImg] = useState<string | null>(null)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getDetails = async () => {
@@ -37,6 +38,8 @@ const EditProductsForm = (choseSelected: selected) => {
                 console.log(data);
                 setDetails(data && data.length > 0 ? data[0] : null)
                 setCurrentImg(data && data.length> 0 ? data[0].image_url : null)
+            
+                
             } catch (error) {
                 console.error((error as Error).message)
             }
@@ -149,6 +152,33 @@ const EditProductsForm = (choseSelected: selected) => {
         if(error) throw error;
     }
 
+    const updateProductImage = async (file: File) => {
+        const ext = file.name.split(".").pop();
+        const fileName = `${crypto.randomUUID()}.${ext}`
+
+        const { error } = await supabase.storage.from("product-images").upload(fileName, file);
+
+        if(error) throw error;
+
+        const { data } = supabase.storage.from("product-images").getPublicUrl(fileName);
+
+        return {newImageName:fileName ,publicUrl: data.publicUrl};
+    }
+
+    const deleteOldImage = async (image: string) => {
+        const {error} = await supabase.storage.from("product-images").remove([`${image}`]);
+
+        if(error) throw error
+    }
+
+    const updateProductWithImage = async (name: string, price: number, image_url: string, image_name: string) => {
+        const {error} = await supabase.from("products").update({name, price, image_url, image_name}).eq("id", id);
+
+        if(error) throw error
+    }
+
+    
+
     const handleUpdate = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -158,11 +188,34 @@ const EditProductsForm = (choseSelected: selected) => {
         
         console.log(`${name}, ${price}`)
         
-        return 
         try {
-            
+            if(!details) return
+
+            let imageUrl = details.image_url;
+            let imageName = details.image_name;
+
+            if(!currentImg && theFile){
+                const uploaded = await updateProductImage(theFile)
+                imageUrl = uploaded.publicUrl;
+                imageName = uploaded.newImageName;
+
+                console.log(`Image name: ${details.image_name}`)
+                await deleteOldImage(details.image_name)
+            }
+
+            if(!currentImg && !theFile){
+                setErrs(prev => ({...prev, file: true}))
+                toast.error("Missing image")
+                return;
+            }
+
+            updateProductWithImage(name, price, imageUrl, imageName)
+
+            toast.success("Product updated successfully!")
+            navigate("/dashboard")
         } catch (error) {
-            
+            console.error(error);
+            toast.error("Update failed");
         }
     }
 
@@ -241,14 +294,15 @@ const EditProductsForm = (choseSelected: selected) => {
                         </div>
                     )}
                 </div>
-                <button className='bg-green-500 rounded p-5 cursor-pointer'>Upload</button>
+                <button className='bg-green-500 rounded p-5 cursor-pointer'>Update</button>
+                <button className='bg-red-500 rounded p-5 cursor-pointer'>Delete</button>
             </form>
         ):(
             <div className='grid place-items-center h-[500px]'>
                 <ClipLoader color='green' cssOverride={{borderWidth: 3}}/>
             </div>
         )}
-        <ToastContainer/>
+        <ToastContainer theme='dark'/>
     </>
 
   )

@@ -54,14 +54,15 @@ const ProductsForm = (choseSelected: selected) => {
 
             const { data: publicUrlData} = supabase.storage.from("product-images").getPublicUrl(fileName);
 
-            return publicUrlData.publicUrl;
+            return {imageUrl: publicUrlData.publicUrl, imageName: fileName};
     }
 
-    const createProduct = async (name: string, price: number, imageUrl: string) => {
+    const createProduct = async (name: string, price: number, imageUrl: string, imageName: string) => {
         const { error } = await supabase.from("products").insert([{
             name,
             price,
-            image_url: imageUrl
+            image_url: imageUrl,
+            image_name: imageName
         }]);
 
         if(error) throw error
@@ -96,9 +97,9 @@ const ProductsForm = (choseSelected: selected) => {
         }
 
         try {
-            const imageUrl = await uploadImage(file);
+            const image = await uploadImage(file);
 
-            await createProduct(name, price, imageUrl);
+            await createProduct(name, price, image.imageUrl, image.imageName);
 
             toast.success("Product added successfully!")
             
