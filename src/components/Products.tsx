@@ -75,12 +75,12 @@ const Products = ({setSelected}: ChildProps) => {
                                                 </div>
                                             </Link>
                                         ))}
+                                        {authenticated &&
+                                            <div onClick={() => setSelected && setSelected("addProduct")} className="hover:bg-white hover:text-[rgb(23,23,23)] border border-white rounded grid place-items-center text-white duration-200 cursor-pointer h-66">
+                                                <Plus size={50}/>
+                                            </div>
+                                        }
                                     </>
-                                }
-                                {authenticated &&
-                                    <div onClick={() => setSelected && setSelected("addProduct")} className="hover:bg-white hover:text-[rgb(23,23,23)] border border-white rounded grid place-items-center text-white duration-200 cursor-pointer h-full">
-                                        <Plus size={50}/>
-                                    </div>
                                 }
                             </>
                         ):(

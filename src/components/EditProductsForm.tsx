@@ -1,10 +1,12 @@
-import { X } from 'lucide-react'
+import { TriangleAlert, X } from 'lucide-react'
 import React, { useEffect, useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { supabase } from '../supabaseClient'
 import type { detailType } from './Products'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import {motion} from 'framer-motion'
 
 type errsType = {
     name: boolean,
@@ -25,6 +27,9 @@ const EditProductsForm = (choseSelected: selected) => {
     const [details, setDetails] = useState<detailType | null>(null)
     const [currentImg, setCurrentImg] = useState<string | null>(null)
     const navigate = useNavigate();
+
+    //Delete request:
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         const getDetails = async () => {
@@ -219,6 +224,29 @@ const EditProductsForm = (choseSelected: selected) => {
         }
     }
 
+    // Delete
+
+    const deleteProduct = async () => {
+        const { error } = await supabase.from("products").delete().eq("id", id);
+
+        if(error) throw error
+    }
+
+    const handleDelete = async () => {
+        if(!details) return;
+        
+        try {
+            deleteProduct();
+
+            deleteOldImage(details.image_name)
+
+            toast.success("Product deleted successfully")
+            navigate("/dashboard")
+        } catch (error) {
+            console.error((error as Error).message)
+        }
+    }
+
   return (
     <>
         {details ? (
@@ -295,7 +323,7 @@ const EditProductsForm = (choseSelected: selected) => {
                     )}
                 </div>
                 <button className='bg-green-500 rounded p-5 cursor-pointer'>Update</button>
-                <button className='bg-red-500 rounded p-5 cursor-pointer'>Delete</button>
+                <button onClick={() => setOpen(true)} type='button' className='bg-red-500 rounded p-5 cursor-pointer'>Delete</button>
             </form>
         ):(
             <div className='grid place-items-center h-[500px]'>
@@ -303,6 +331,39 @@ const EditProductsForm = (choseSelected: selected) => {
             </div>
         )}
         <ToastContainer theme='dark'/>
+        <Dialog
+            open={open}
+            onClose={setOpen}
+            className="relative z-50"
+        >
+            {/* Background overlay */}
+            <motion.div className="fixed inset-0 bg-black/60" 
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+            />
+
+            <div className='fixed inset-0 flex w-screen items-center justify-center p-4'>
+
+                <DialogPanel className="mx-auto max-w-sm rounded bg-white p-5 max-sm:w-[90%] sm:w-[50%]">
+                    <div className='flex justify-center flex-col items-center gap-3'>
+                        <TriangleAlert size={100} className='text-red-500'/>
+                        <div className='text-center'>
+                            <DialogTitle className="text-2xl font-bold">Are you sure?</DialogTitle>
+                            <p className="text-gray-500">Warning: This action cannot be undone.</p>
+                        </div>
+                        <div className='flex gap-3'>
+                            <button 
+                                className='px-5 py-2 bg-red-500 text-white rounded-full cursor-pointer hover:bg-red-600 duration-200 -translate-y-0.25 hover:translate-none shadow hover:shadow-none' 
+                                onClick={() => handleDelete()}>
+                                    Yes
+                            </button>
+                            <button className='px-5 py-2 bg-gray-500 text-white rounded-full cursor-pointer hover:bg-gray-600 duration-200 -translate-y-0.25 hover:translate-none shadow hover:shadow-none' onClick={() => setOpen(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </DialogPanel>
+            </div>
+        </Dialog>
     </>
 
   )
