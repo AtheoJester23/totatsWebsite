@@ -50,12 +50,12 @@ const Navbar = () => {
 
     console.log("this", currentLoc);
     return (  
-        <motion.div className="z-1000 bg-white/0.01 backdrop-blur-lg top-0 inset-x-0 mx-5 max-sm:px-0 max-sm:py-5 px-40 z-20 flex justify-between items-center max-sm:pt-5 mx-0 fixed max-md:px-2"
+        <motion.div className="z-1000 bg-white/0.01 backdrop-blur-lg top-0 inset-x-0 mx-0 max-sm:px-5 max-sm:py-2 px-40 flex justify-between items-center mx-0 fixed max-md:px-2"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ type: 'spring', stiffness: 50, duration: 0.5 }}  
         >
-            <div className="w-full flex flex-wrap items-center justify-between p-4">
+            <div className="w-full flex flex-wrap items-center justify-between p-0">
                 <a href="/" className="flex items-center justify-center max-sm:gap-2 gap-3">
                     <img src="/logo.png" className="max-sm:h-[30px] h-[35px]" alt="website-logo"/>
                     <h1 className="max-sm:text-1xl text-2xl font-bold text-white">TOTATS</h1>
@@ -212,7 +212,7 @@ const Navbar = () => {
                         scale: 1.1,
                     }}    
                 >
-                    <Menu className={`w-6`} size={100}/>
+                    <Menu className={`h-10`}/>
                 </motion.button>
                 
                 <AnimatePresence>

@@ -1,8 +1,7 @@
 import { X } from 'lucide-react'
-import React, { useEffect, useRef, useState, type FormEvent } from 'react'
+import React, { useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { supabase } from '../supabaseClient'
-import type { detailType } from './Products'
 
 type errsType = {
     name: boolean,
@@ -128,7 +127,7 @@ const ProductsForm = (choseSelected: selected) => {
                 <label htmlFor="ItemPrice">Price:</label>
                 <div className='flex flex-col'>
                     <input
-                        onChange={(e) => {
+                        onChange={() => {
                             setErrs(prev => ({...prev, price: false}))
                         }} 
                         type="number" id="ItemPrice" name="ItemPrice" className={`border ${errs.price ? "border-red-500" : "border-gray-500"} p-5 rounded`} placeholder='0' />

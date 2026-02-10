@@ -14,11 +14,7 @@ type errsType = {
     file: boolean
 }
 
-type selected = {
-    setSelected?: (value: string) => void
-}
-
-const EditProductsForm = (choseSelected: selected) => {
+const EditProductsForm = () => {
     const [errs, setErrs] = useState<errsType>({name: false, price: false, file: false})
     const inputRef = useRef<HTMLInputElement>(null)
     const [theFile, setTheFile] = useState<File | null>(null)
@@ -77,84 +73,9 @@ const EditProductsForm = (choseSelected: selected) => {
         }
     }
 
-    const uploadImage = async (file: File) => {
-            const fileExt = file.name.split(".").pop();
-            const fileName = `${crypto.randomUUID()}.${fileExt}`
-
-            const { error } = await supabase.storage.from("product-images").upload(fileName, file);
-            
-            if(error){
-                throw error
-            }
-
-            const { data: publicUrlData} = supabase.storage.from("product-images").getPublicUrl(fileName);
-
-            return publicUrlData.publicUrl;
-    }
-
-    const createProduct = async (name: string, price: number, imageUrl: string) => {
-        const { error } = await supabase.from("products").insert([{
-            name,
-            price,
-            image_url: imageUrl
-        }]);
-
-        if(error) throw error
-    }
-
-    const handleUpload = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        const formData = new FormData(e.currentTarget);
-        const name = formData.get("ItemName") as string;
-        const price = parseFloat(formData.get("ItemPrice") as string);
-        const file = theFile as File
-
-        const errs = {name: false, price: false, file: false};
-
-        if(!name || name.replace(/[ ]/g, "") == ""){
-            errs.name = true
-        }
-        if(!price){
-            errs.price = true;
-        }
-        if(!file){
-            errs.file = true;
-        }
-
-        console.log(`${name}, ${price}, ${theFile}`)
-
-        if(Object.values(errs).includes(true)){
-            setErrs(errs);
-            toast.error("Please input all fields and select an image before uploading.");
-            return;
-        }
-
-        try {
-            const imageUrl = await uploadImage(file);
-
-            await createProduct(name, price, imageUrl);
-
-            toast.success("Product added successfully!")
-            
-            if(choseSelected && choseSelected.setSelected){
-                choseSelected.setSelected("shop")
-            }
-        } catch (error) {
-            console.error((error as Error).message);
-            toast.error("Something went wrong")
-        }
-    }
-
     // --------------------------------------------------------------
     const handleRemoveImage = () => {
         setCurrentImg(null);
-    }
-
-    const updateProduct = async (name: string, price: number) => {
-        const {error} = await supabase.from("products").update({name, price}).eq("id", id);
-
-        if(error) throw error;
     }
 
     const updateProductImage = async (file: File) => {
@@ -265,7 +186,7 @@ const EditProductsForm = (choseSelected: selected) => {
                     <div className='flex flex-col'>
                         <input
                             defaultValue={details.price}
-                            onChange={(e) => {
+                            onChange={() => {
                                 setErrs(prev => ({...prev, price: false}))
                             }} 
                             type="number" id="ItemPrice" name="ItemPrice" className={`border ${errs.price ? "border-red-500" : "border-gray-500"} p-5 rounded`} placeholder='0' />
