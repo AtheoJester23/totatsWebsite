@@ -50,7 +50,7 @@ const Navbar = () => {
 
     console.log("this", currentLoc);
     return (  
-        <motion.div className="z-1000 top-0 inset-x-0 mx-5 max-sm:px-0 max-sm:py-5 px-40 z-20 flex justify-between items-center max-sm:pt-5 mx-0 fixed max-md:px-2"
+        <motion.div className="z-1000 bg-white/0.01 backdrop-blur-lg top-0 inset-x-0 mx-5 max-sm:px-0 max-sm:py-5 px-40 z-20 flex justify-between items-center max-sm:pt-5 mx-0 fixed max-md:px-2"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ type: 'spring', stiffness: 50, duration: 0.5 }}  
