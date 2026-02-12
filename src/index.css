@@ -36,6 +36,10 @@ body{
   background-color: #e4e4e7;
 }
 
+.regularBtn{
+  @apply hover:cursor-pointer hover:translate-y-0.25 duration-300
+}
+
 /* Dashboard phone view */
 .phoneOption{
   @apply max-sm:fixed z-10 right-0 left-0 bottom-0 max-sm:w-full

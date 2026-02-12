@@ -10,7 +10,7 @@ const Dashboard = () => {
     const [selected, setSelected] = useState("schedules")
 
     return (  
-        <div className="h-[100vh] pt-30 flex w-full">
+        <div className="h-[100vh] pt-14 flex w-full">
             <div className="relative border-t border-[rgb(18,18,18)] flex w-full ">
                 <div className="phoneOption w-[23.5%] bg-[rgb(23,23,23)]">
                     <ul className="phoneOptionBtns">
@@ -43,7 +43,7 @@ const Dashboard = () => {
                             <Products setSelected={setSelected}/>
                         </div>
                     ): selected == "addProduct" ? (
-                        <div className="p-5 flex flex-col gap-5 overflow-y-hidden h-[620px]">
+                        <div className="p-5 flex flex-col gap-5 overflow-y-hidden max-sm:h-[610px] h-[710px]">
                             <div className="px-5  m-0">
                                 <button onClick={() => setSelected("shop")} className="text-white hover:bg-white hover:text-[rgb(23,23,23)] cursor-pointer duration-300 p-2 rounded">
                                     <MoveLeft/>
