@@ -61,7 +61,7 @@ const Navbar = () => {
                     <h1 className="max-sm:text-1xl text-2xl font-bold text-white">TOTATS</h1>
                 </a>
 
-                {currentLoc !== "dashboard" && <div className='flex gap-5 p-5 justify-center items-center max-sm:hidden'>
+                {currentLoc !== "dashboard" && currentLoc == "dashboard/shop" && <div className='flex gap-5 p-5 justify-center items-center max-sm:hidden'>
                     <Link to={'/schedule'}>
                         <motion.span className='text-white font-bold'
                             initial={{textShadow: '0 0 5px #fff'}}

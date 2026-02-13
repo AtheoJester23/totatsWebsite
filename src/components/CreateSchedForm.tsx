@@ -92,7 +92,7 @@ const CreateSchedForm = () => {
     }
 
     return (
-        <div className="flex flex-col w-full max-sm:h-[70vh] min-md:h-[79vh] overflow-y-auto p-5">
+        <div className="flex flex-col w-full max-sm:h-[70vh] min-md:h-[79vh] overflow-y-auto">
             <h1 className="text-white text-2xl mb-5">Book a session</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col w-full text-white gap-3">
                 <div className="flex flex-col select-none gap-1 ">

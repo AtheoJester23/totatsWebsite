@@ -12,6 +12,7 @@ import SchedDetails from "./pages/SchedDetails"
 import Chatbot from "./components/Chatbot"
 import Shop from './pages/Shop'
 import EditProduct from "./pages/EditProduct"
+import Schedules from "./components/dashboard/Schedules"
 
 function App() {
   return (
@@ -27,11 +28,14 @@ function App() {
           <ProtectedRoute>
             <Dashboard/>
           </ProtectedRoute>
-        }/>
+        }>
+          <Route index element={<Schedules/>}/>
+          <Route path="createSchedule" element={<CreateSched/>}/>
+          <Route path="shop" element={<Shop/>}/>
+        </Route>
         <Route path="/shop" element={<Shop/>}/>
         <Route path="/edit/:id" element={<EditProduct/>}/>
         <Route path="/editSched/:id" element={<SchedDetails/>}/>
-        <Route path="/createSched" element={<CreateSched/>}/>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>
