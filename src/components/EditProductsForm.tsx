@@ -171,7 +171,7 @@ const EditProductsForm = () => {
   return (
     <>
         {details ? (
-            <form onSubmit={(e) => handleUpdate(e)} className='text-white flex flex-col gap-5 overflow-y-auto px-5 '>
+            <form onSubmit={(e) => handleUpdate(e)} className='text-white flex flex-col gap-5 overflow-y-auto px-5 h-[650px]'>
                 <div className='inputCombo'>
                     <label htmlFor="ItemName">Item Name:</label>
                     <div className='flex flex-col'>
@@ -234,8 +234,11 @@ const EditProductsForm = () => {
                         </div>
                     ):(
                         <div className='flex justify-center items-center'>
-                            <div className='relative'>
-                                <img src={`${details.image_url}`} alt="" className='w-50'/>
+                            <div className='relative w-full border border-dashed border-2 border-gray-500 rounded p-5'>
+                                <div className='flex flex-col items-center gap-2'>
+                                    <img src={`${details.image_url}`} alt="" className='w-50 rounded-s'/>
+                                    <h1 className='text-white text-center'>{details.image_name}</h1>
+                                </div>
                                 <button type='button' onClick={handleRemoveImage} className='text-red-500 bg-black rounded-full p-1 absolute top-[-15px] right-[-15px] hover:translate-y-0.25 duration-200 cursor-pointer'>
                                     <X size={30}/>
                                 </button>
