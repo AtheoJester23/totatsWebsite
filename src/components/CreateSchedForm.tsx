@@ -82,7 +82,7 @@ const CreateSchedForm = () => {
             }
 
             toast.success('Successfully booked a session.')
-            navigate("/schedule")
+            navigate("/dashboard")
         } catch (error) {
             console.error((error as Error).message)
             toast.error('Failed to book a session.')

@@ -28,7 +28,7 @@ const EditProduct = () => {
   }, [])
 
   return (
-    <div className="mt-30 p-5 flex flex-col gap-5 overflow-y-hidden">
+    <div className="mt-0 p-5 flex flex-col gap-5 overflow-y-hidden">
       <EditProductsForm/>
     </div>
   )

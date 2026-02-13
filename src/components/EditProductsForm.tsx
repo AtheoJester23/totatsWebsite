@@ -138,7 +138,7 @@ const EditProductsForm = () => {
             updateProductWithImage(name, price, imageUrl, imageName)
 
             toast.success("Product updated successfully!")
-            navigate("/dashboard")
+            navigate("/dashboard/shop")
         } catch (error) {
             console.error(error);
             toast.error("Update failed");

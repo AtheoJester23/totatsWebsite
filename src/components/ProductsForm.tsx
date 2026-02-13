@@ -2,6 +2,7 @@ import { X } from 'lucide-react'
 import React, { useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { supabase } from '../supabaseClient'
+import { useNavigate } from 'react-router-dom'
 
 type errsType = {
     name: boolean,
@@ -17,6 +18,9 @@ const ProductsForm = (choseSelected: selected) => {
     const [errs, setErrs] = useState<errsType>({name: false, price: false, file: false})
     const inputRef = useRef<HTMLInputElement>(null)
     const [theFile, setTheFile] = useState<File | null>(null)
+
+    const navigate = useNavigate();
+
 
     const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] ?? null
@@ -105,6 +109,8 @@ const ProductsForm = (choseSelected: selected) => {
             if(choseSelected && choseSelected.setSelected){
                 choseSelected.setSelected("shop")
             }
+
+            navigate("/dashboard/shop")
         } catch (error) {
             console.error((error as Error).message);
             toast.error("Something went wrong")

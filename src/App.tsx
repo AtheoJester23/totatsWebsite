@@ -13,6 +13,8 @@ import Chatbot from "./components/Chatbot"
 import Shop from './pages/Shop'
 import EditProduct from "./pages/EditProduct"
 import Schedules from "./components/dashboard/Schedules"
+import ProductsForm from "./components/ProductsForm"
+import CreateProduct from "./components/dashboard/CreateProduct"
 
 function App() {
   return (
@@ -32,9 +34,10 @@ function App() {
           <Route index element={<Schedules/>}/>
           <Route path="createSchedule" element={<CreateSched/>}/>
           <Route path="shop" element={<Shop/>}/>
+          <Route path="shop/edit/:id" element={<EditProduct/>}/>
+          <Route path="shop/createProduct" element={<CreateProduct/>}/>
         </Route>
         <Route path="/shop" element={<Shop/>}/>
-        <Route path="/edit/:id" element={<EditProduct/>}/>
         <Route path="/editSched/:id" element={<SchedDetails/>}/>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>

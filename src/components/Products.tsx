@@ -64,7 +64,7 @@ const Products = ({setSelected}: ChildProps) => {
                                 {items &&
                                     <>
                                         {items.map((item, index) => (
-                                            <Link to={`/edit/${item.id}`} key={index} className="text-[rgb(23,23,23)] max-sm:p-3 p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50">
+                                            <Link to={`edit/${item.id}`} key={index} className="text-[rgb(23,23,23)] max-sm:p-3 p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50">
                                                 <img src={`${item.image_url}`} alt="" className="w-70 max-sm:h-31 h-41 object-cover rounded-t" />
                                                 <div className="">
                                                     <h1 className="text-[16px]">{item.name}</h1>
@@ -76,9 +76,9 @@ const Products = ({setSelected}: ChildProps) => {
                                             </Link>
                                         ))}
                                         {authenticated &&
-                                            <div onClick={() => setSelected && setSelected("addProduct")} className="hover:bg-white hover:text-[rgb(23,23,23)] border border-white rounded grid place-items-center text-white duration-200 cursor-pointer auto-rows-fr">
+                                            <Link to={"createProduct"} onClick={() => setSelected && setSelected("addProduct")} className="hover:bg-white hover:text-[rgb(23,23,23)] border border-white rounded grid place-items-center text-white duration-200 cursor-pointer auto-rows-fr">
                                                 <Plus size={50}/>
-                                            </div>
+                                            </Link>
                                         }
                                     </>
                                 }
