@@ -1,14 +1,9 @@
-import { Calendar, MoveLeft, Plus, Store } from "lucide-react";
-import Schedules from "../components/dashboard/Schedules";
+import { Calendar, Plus, Store } from "lucide-react";
 import { useState } from "react";
-import CreateSchedForm from "../components/CreateSchedForm";
-import Products from "../components/Products";
-import ProductsForm from "../components/ProductsForm";
-import PageNotFound from "./PageNotFound";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
-    const [selected, setSelected] = useState("schedules")
+    const [_, setSelected] = useState("schedules")
 
     return (  
         <div className="h-[100vh] pt-14 flex w-full">

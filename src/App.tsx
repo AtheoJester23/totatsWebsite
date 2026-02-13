@@ -13,7 +13,6 @@ import Chatbot from "./components/Chatbot"
 import Shop from './pages/Shop'
 import EditProduct from "./pages/EditProduct"
 import Schedules from "./components/dashboard/Schedules"
-import ProductsForm from "./components/ProductsForm"
 import CreateProduct from "./components/dashboard/CreateProduct"
 
 function App() {

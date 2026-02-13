@@ -1,6 +1,4 @@
-import { MoveLeft } from "lucide-react"
 import ProductsForm from "../ProductsForm"
-import { Link } from "react-router-dom"
 
 const CreateProduct = () => {
   return (
