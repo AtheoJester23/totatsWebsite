@@ -56,7 +56,7 @@ const Products = ({setSelected}: ChildProps) => {
     }, [])
 
     return (
-        <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-[570px] max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-[520px] overflow-y-auto max-sm:no-scrollbar p-5"}`}>
+        <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-[570px] max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-[550px] overflow-y-auto max-sm:no-scrollbar p-5"}`}>
             {!loading ? (
                 <div className="grid max-sm:grid-cols-2 grid-cols-5 max-sm:gap-5 gap-10 auto-rows-fr">
                         {currentDir == "dashboard" ? (

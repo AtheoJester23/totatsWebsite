@@ -46,15 +46,11 @@ body{
 }
 
 .phoneOptionBtns{
-  @apply max-sm:text-[11px] max-sm:flex max-sm:justify-center
+  @apply max-sm:text-[11px] max-sm:grid max-sm:grid-cols-3 w-full auto-rows-fr
 }
 
-.phoneOptionBtns{
-  @apply max-sm:grid max-sm:grid-cols-3
-}
-
-.phoneOptionBtns li{
-  @apply max-sm:p-2 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center
+.phoneOptionLinks{
+  @apply text-white max-sm:border-none border flex items-center max-sm:p-0 max-sm:py-5 p-5 max-sm:m-0 m-5 rounded relative hover:bg-white hover:text-[rgb(23,23,23)] duration-300 max-sm:flex-col
 }
 
 .smallChatBox{
