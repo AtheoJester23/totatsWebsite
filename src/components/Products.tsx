@@ -64,7 +64,7 @@ const Products = ({setSelected}: ChildProps) => {
                                 {items &&
                                     <>
                                         {items.map((item, index) => (
-                                            <Link to={`edit/${item.id}`} key={index} className="text-[rgb(23,23,23)] max-sm:p-3 p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50">
+                                            <Link to={`edit/${item.id}`} key={index} className="text-[rgb(23,23,23)] max-sm:p-3 p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50 hover:translate-y-0.25 duration-300">
                                                 <img src={`${item.image_url}`} alt="" className="w-70 max-sm:h-31 h-41 object-cover rounded-t" />
                                                 <div className="">
                                                     <h1 className="text-[16px]">{item.name}</h1>
