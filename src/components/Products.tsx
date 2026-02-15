@@ -56,9 +56,9 @@ const Products = ({setSelected}: ChildProps) => {
     }, [])
 
     return (
-        <div className="h-[670px] max-sm:h-[520px] overflow-y-auto max-sm:no-scrollbar p-5">
+        <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-[570px] max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-[520px] overflow-y-auto max-sm:no-scrollbar p-5"}`}>
             {!loading ? (
-                <div className="grid max-sm:grid-cols-2 grid-cols-5 max-sm:gap-5  gap-10 auto-rows-fr">
+                <div className="grid max-sm:grid-cols-2 grid-cols-5 max-sm:gap-5 gap-10 auto-rows-fr">
                         {currentDir == "dashboard" ? (
                             <>
                                 {items &&
@@ -67,7 +67,7 @@ const Products = ({setSelected}: ChildProps) => {
                                             <Link to={`edit/${item.id}`} key={index} className="text-[rgb(23,23,23)] max-sm:p-3 p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50 hover:translate-y-0.25 duration-300">
                                                 <img src={`${item.image_url}`} alt="" className="w-70 max-sm:h-31 h-41 object-cover rounded-t" />
                                                 <div className="">
-                                                    <h1 className="text-[16px]">{item.name}</h1>
+                                                    <h1 className="text-[16px] truncate">{item.name}</h1>
                                                     <div className="flex items-center">
                                                         <PhilippinePeso className={`h-4`}/>
                                                         <span>{item.price}</span>
@@ -88,10 +88,10 @@ const Products = ({setSelected}: ChildProps) => {
                                 {items &&
                                     <>
                                         {items.map((item, index) => (
-                                            <div key={index} className="text-[rgb(23,23,23)] p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer">
+                                            <div key={index} className="text-[rgb(23,23,23)] p-5 rounded border bg-white flex flex-col gap-3 cursor-pointer max-sm:h-50 h-73">
                                                 <img src={`${item.image_url}`} alt="" className="w-70 h-41 object-contain rounded-t" />
                                                 <div className="">
-                                                    <h1 className="text-[16px]">{item.name}</h1>
+                                                    <h1 className="text-[16px] truncate">{item.name}</h1>
                                                     <div className="flex items-center">
                                                         <PhilippinePeso size={15}/>
                                                         <span>{item.price}</span>
