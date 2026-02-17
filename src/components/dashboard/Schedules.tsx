@@ -42,12 +42,12 @@ const Schedules = () => {
     console.log(scheds)
 
     return (  
-        <div className="flex flex-col gap-5 p-5 text-white">
+        <div className="flex flex-col gap-5 max-sm:p-2 p-5 text-white">
             {!loading ? (
-                <div className="max-sm:h-[70vh] min-md:h-[79vh] overflow-y-auto flex flex-col gap-5 p-5">
+                <div className="max-sm:h-[70vh] min-md:h-[79vh] overflow-y-auto flex flex-col max-sm:gap-3 gap-5 p-5">
                     {scheds.map((item) => (
                         <Link to={`/editSched/${item.id}`} key={item.id} className="border rounded p-5 relative">
-                            <h1 className="max-sm:text-xl text-4xl font-bold">{item.name}</h1>
+                            <h1 className="max-sm:text-xl text-4xl font-bold truncate">{item.name}</h1>
                             <p className="max-sm:text-[14px]"><strong>Category:</strong> {item.category}</p>
                             <p className="max-sm:text-[12px]"><strong>Date:</strong> {item.date}</p>
                             <div className="absolute top-5 right-5 flex justify-center items-center">

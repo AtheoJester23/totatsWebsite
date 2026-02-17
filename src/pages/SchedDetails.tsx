@@ -148,7 +148,7 @@ const SchedDetails = () => {
     }
 
     return (
-        <div className="flex flex-col w-full max-sm:p-5 max-sm:mt-30 max-sm:mb-10 p-20 mt-20">
+        <div className="flex flex-col w-full max-sm:p-0 max-sm:mt-12 max-sm:mb-10 p-17">
             {!loading ? (
                 <div className="flex flex-col w-full h-[79vh] p-7">
                 <h1 className="text-white text-2xl mb-5">Book a session</h1>
