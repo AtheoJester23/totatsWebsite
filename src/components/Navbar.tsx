@@ -48,7 +48,8 @@ const Navbar = () => {
         }
     }, [])
 
-    console.log("this", currentLoc);
+    console.log("this", currentLoc.slice(0, 9));
+
     return (  
         <motion.div className="z-1000 bg-white/0.01 backdrop-blur-lg top-0 inset-x-0 mx-0 max-sm:px-5 max-sm:py-2 px-40 flex justify-between items-center mx-0 fixed max-md:px-2"
             initial={{ y: -100 }}
@@ -61,7 +62,7 @@ const Navbar = () => {
                     <h1 className="max-sm:text-1xl text-2xl font-bold text-white">TOTATS</h1>
                 </a>
 
-                {(currentLoc !== "dashboard" && currentLoc !== "dashboard/shop") && <div className='flex gap-5 p-5 justify-center items-center max-sm:hidden'>
+                {currentLoc.slice(0, 9) !== "dashboard" && <div className='flex gap-5 p-5 justify-center items-center max-sm:hidden'>
                     <Link to={'/schedule'}>
                         <motion.span className='text-white font-bold'
                             initial={{textShadow: '0 0 5px #fff'}}
