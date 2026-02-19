@@ -14,6 +14,8 @@ import Shop from './pages/Shop'
 import EditProduct from "./pages/EditProduct"
 import Schedules from "./components/dashboard/Schedules"
 import CreateProduct from "./components/dashboard/CreateProduct"
+import Footer from "./components/Footer"
+import StudioPolicies from "./pages/StudioPolicies"
 
 function App() {
   return (
@@ -38,8 +40,10 @@ function App() {
         </Route>
         <Route path="/shop" element={<Shop/>}/>
         <Route path="/editSched/:id" element={<SchedDetails/>}/>
+        <Route path="/tpc" element={<StudioPolicies/>}/>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }

@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (  
-        <div className="bg-green-500 w-full absolute bottom-0 left-0 right-0">
-            <h1 className="text-5xl font-bold text-white">Testing</h1>
+        <div className="z-1000 bg-[rgb(23,23,23)] w-full p-10 flex justify-center items-center">
+            <Link to={"/tpc"} className="text-gray-500">Terms, Policies & Consent</Link>
         </div>
     );
 }
