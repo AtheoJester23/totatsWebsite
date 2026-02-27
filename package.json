@@ -1,5 +1,11 @@
 {
   "name": "totats",
+  "author": "Atheo Jester S. Baltazar",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AtheoJester23/totatsWebsite"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

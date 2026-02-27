@@ -1,0 +1,7 @@
+Copyright (c) 2026 Atheo Jester S. Baltazar
+
+All rights reserved.
+
+This code is provided for viewing purposes only.
+You may not copy, modify, distribute, sublicense, or use this code in any project,
+commercial or non-commercial, without explicit written permission from the author.
