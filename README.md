@@ -8,10 +8,8 @@ TOTATS (Tattoo Studio Administrative Scheduling, Product Catalog, and AI Inquiry
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Usage](#usage)
 - [Screenshots](#screenshots)
 - [License](#license)
-- 
 ---
 
 ## Overview
@@ -31,6 +29,15 @@ The goal is to streamline administrative work, enhance client interaction, and b
 - **AI Inquiry System**: An AI assistant that answers common client questions and provides information about the tattoo shop.
 - **Admin Dashboard**: Centralized control for studio staff to manage operations.
 - **Responsive Design**: Accessible from desktops, tablets, and mobile devices.
+
+---
+
+## Screenshots
+
+<img width="1440" height="768" alt="image" src="https://github.com/user-attachments/assets/135ed824-1e25-4a4e-98c7-ce0bb09f258b" />
+<img width="1440" height="771" alt="image" src="https://github.com/user-attachments/assets/05b67d71-fe18-4998-93e4-d500e0b1fc10" />
+<img width="1439" height="767" alt="image" src="https://github.com/user-attachments/assets/35b91557-01d3-484e-b8b4-69e9dd858273" />
+
 
 ---
 
