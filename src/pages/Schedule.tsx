@@ -7,12 +7,11 @@ import { compareTimeToNow, compareToToday, minimalTime, to12Hour, toReadableDate
 import { ClipLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
-import { setActive, setOpen } from '../state/status/shopStats';
+import { setOpen } from '../state/status/shopStats';
 
 const Schedule = () => {
     const [loading, setLoading] = useState(false)
     const open = useSelector((state: RootState) => state.shop.isOpen)
-    const walkIn = useSelector((state: RootState) => state.shop.isActive);
     const dispatch = useDispatch<AppDispatch>()
 
     const test = [
@@ -58,8 +57,6 @@ const Schedule = () => {
 
                 setFuture(schedsRes.data.filter(item => compareToToday(item.date) == 1));
                 dispatch(setOpen(statsRes.data[0].is_open));
-                dispatch(setActive(statsRes.data[0].is_active));
-
                 console.log(statsRes.data[0].is_active);
             } catch (error) {
                 console.error((error as Error).message)
@@ -102,15 +99,6 @@ const Schedule = () => {
                                             <p className='text-[14px]'>{to12Hour(item.time)}</p>
                                         </div>
                                     ))}
-                                    {walkIn &&
-                                        (
-                                            <div className={`border border-gray-500 rounded text-white p-5 `}>
-                                                <h1 className='text-xl font-bold'>Walk in client</h1>
-                                                <p className='text-[16px]'>Date</p>
-                                                <p className='text-[14px]'>Time</p>
-                                            </div>
-                                        )
-                                    }
                                 </div>
                             ):(
                                 <h1 className='text-center text-5xl text-[rgb(23,23,23)]'>Nothing Scheduled Today</h1>

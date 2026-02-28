@@ -2,12 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type initialType = {
     isOpen: boolean,
-    isActive: boolean
+    confWIC: boolean,
+    WIC: {
+        id: string,
+        createdat: string,
+        category: string
+    }[] | []
 }
 
 const initialState: initialType = {
     isOpen: true,
-    isActive: false
+    confWIC: false,
+    WIC: []
 }
 
 const shopStats = createSlice({
@@ -17,11 +23,14 @@ const shopStats = createSlice({
         setOpen(state, action){
             state.isOpen = action.payload
         },
-        setActive(state, action){
-            state.isActive = action.payload
+        setConfWIC(state, action){
+            state.confWIC = action.payload
+        },
+        setWIC(state, action){
+            state.WIC = action.payload
         }
     }
 })
 
-export const { setOpen, setActive } = shopStats.actions;
+export const { setOpen, setConfWIC, setWIC } = shopStats.actions;
 export default shopStats.reducer;
