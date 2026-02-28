@@ -5,10 +5,16 @@ import { supabase } from '../supabaseClient';
 import type { schedTypes } from '../components/dashboard/Schedules';
 import { compareTimeToNow, compareToToday, minimalTime, to12Hour, toReadableDate } from '../utils/time';
 import { ClipLoader } from 'react-spinners';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../state/store';
+import { setActive, setOpen } from '../state/status/shopStats';
 
 const Schedule = () => {
     const [loading, setLoading] = useState(false)
-    
+    const open = useSelector((state: RootState) => state.shop.isOpen)
+    const walkIn = useSelector((state: RootState) => state.shop.isActive);
+    const dispatch = useDispatch<AppDispatch>()
+
     const test = [
         {
             title: 'Open',
@@ -36,17 +42,25 @@ const Schedule = () => {
         const getScheds = async () => {
             try {
                 setLoading(true)
-                const {data, error} = await supabase.from('schedules').select();
+                const [schedsRes, statsRes] = await Promise.all([
+                    supabase.from('schedules').select(),
+                    supabase.from('shop_status').select().eq('id', import.meta.env.VITE_ID_SHOP_STATUS)
+                ])
 
-                if(error){
-                    throw new Error(`${error.message}`)
+                if (schedsRes.error || statsRes.error) {
+                    throw new Error(
+                        schedsRes.error?.message ?? statsRes.error?.message ?? "Unknown error"
+                    );
                 }
 
                 //today:
-                setToday(data.filter(item => compareToToday(item.date) == 0 ).sort((a, b) => a.time.split(":")[0] - b.time.split(":")[0]));
+                setToday(schedsRes.data.filter(item => compareToToday(item.date) == 0 ).sort((a, b) => a.time.split(":")[0] - b.time.split(":")[0]));
 
-                console.log(data);
-                setFuture(data.filter(item => compareToToday(item.date) == 1));
+                setFuture(schedsRes.data.filter(item => compareToToday(item.date) == 1));
+                dispatch(setOpen(statsRes.data[0].is_open));
+                dispatch(setActive(statsRes.data[0].is_active));
+
+                console.log(statsRes.data[0].is_active);
             } catch (error) {
                 console.error((error as Error).message)
             } finally{
@@ -69,7 +83,7 @@ const Schedule = () => {
                     plugins={[dayGridPlugin]}
                     initialView="dayGridMonth"
                     height="100%"
-                    events={currentTime.getHours() > 21 || currentTime.getHours() > 5 ? test : closed}
+                    events={(currentTime.getHours() > 21 || currentTime.getHours() > 5) && open ? test : closed}
                     eventDisplay="block"
                 />
             </div>
@@ -88,6 +102,15 @@ const Schedule = () => {
                                             <p className='text-[14px]'>{to12Hour(item.time)}</p>
                                         </div>
                                     ))}
+                                    {walkIn &&
+                                        (
+                                            <div className={`border border-gray-500 rounded text-white p-5 `}>
+                                                <h1 className='text-xl font-bold'>Walk in client</h1>
+                                                <p className='text-[16px]'>Date</p>
+                                                <p className='text-[14px]'>Time</p>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             ):(
                                 <h1 className='text-center text-5xl text-[rgb(23,23,23)]'>Nothing Scheduled Today</h1>
