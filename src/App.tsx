@@ -16,6 +16,7 @@ import Schedules from "./components/dashboard/Schedules"
 import CreateProduct from "./components/dashboard/CreateProduct"
 import Footer from "./components/Footer"
 import StudioPolicies from "./pages/StudioPolicies"
+import Shortcuts from "./components/Shortcuts"
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="createSchedule" element={<CreateSched/>}/>
           <Route path="shop" element={<Shop/>}/>
           <Route path="shop/edit/:id" element={<EditProduct/>}/>
+          <Route path="shortcut" element={<Shortcuts/>}/>
           <Route path="shop/createProduct" element={<CreateProduct/>}/>
         </Route>
         <Route path="/shop" element={<Shop/>}/>

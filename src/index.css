@@ -46,7 +46,7 @@ body{
 }
 
 .phoneOptionBtns{
-  @apply max-sm:text-[11px] max-sm:grid max-sm:grid-cols-3 w-full auto-rows-fr
+  @apply max-sm:text-[11px] max-sm:grid max-sm:grid-cols-4 w-full auto-rows-fr
 }
 
 .phoneOptionLinks{
