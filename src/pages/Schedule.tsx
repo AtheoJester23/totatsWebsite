@@ -7,12 +7,13 @@ import { compareTimeToNow, compareToToday, minimalTime, to12Hour, toReadableDate
 import { ClipLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
-import { setOpen } from '../state/status/shopStats';
+import { setOpen, setWIC } from '../state/status/shopStats';
 
 const Schedule = () => {
     const [loading, setLoading] = useState(false)
     const open = useSelector((state: RootState) => state.shop.isOpen)
     const dispatch = useDispatch<AppDispatch>()
+    const wics = useSelector((state: RootState) => state.shop.WIC);
 
     const test = [
         {
@@ -27,6 +28,8 @@ const Schedule = () => {
     
     const currentTime = new Date();
     
+    const hour = currentTime.getHours();
+
     const closed = [{
         title: "Close",
         start: new Date(),
@@ -41,14 +44,15 @@ const Schedule = () => {
         const getScheds = async () => {
             try {
                 setLoading(true)
-                const [schedsRes, statsRes] = await Promise.all([
+                const [schedsRes, statsRes, wicRes] = await Promise.all([
                     supabase.from('schedules').select(),
-                    supabase.from('shop_status').select().eq('id', import.meta.env.VITE_ID_SHOP_STATUS)
+                    supabase.from('shop_status').select().eq('id', import.meta.env.VITE_ID_SHOP_STATUS),
+                    supabase.from('walkinclients').select()
                 ])
 
-                if (schedsRes.error || statsRes.error) {
+                if (schedsRes.error || statsRes.error || wicRes.error) {
                     throw new Error(
-                        schedsRes.error?.message ?? statsRes.error?.message ?? "Unknown error"
+                        schedsRes.error?.message ?? statsRes.error?.message ?? wicRes.error?.message ?? "Unknown error"
                     );
                 }
 
@@ -57,6 +61,7 @@ const Schedule = () => {
 
                 setFuture(schedsRes.data.filter(item => compareToToday(item.date) == 1));
                 dispatch(setOpen(statsRes.data[0].is_open));
+                dispatch(setWIC(wicRes.data));
                 console.log(statsRes.data[0].is_active);
             } catch (error) {
                 console.error((error as Error).message)
@@ -80,7 +85,7 @@ const Schedule = () => {
                     plugins={[dayGridPlugin]}
                     initialView="dayGridMonth"
                     height="100%"
-                    events={(currentTime.getHours() > 21 || currentTime.getHours() > 5) && open ? test : closed}
+                    events={(hour >= 5 && hour <= 21 && open) ? test : closed}
                     eventDisplay="block"
                 />
             </div>
@@ -99,6 +104,29 @@ const Schedule = () => {
                                             <p className='text-[14px]'>{to12Hour(item.time)}</p>
                                         </div>
                                     ))}
+                                    {wics.length > 0 && (
+                                        (
+                                            <div>
+                                                {wics.map(item => {
+                                                    const d = new Date(item.createdat);
+                                                    
+                                                    return (
+                                                        <div key={item.id} className={`border border-gray-500 rounded text-white p-5`}>
+                                                            
+                                                            <h1 className='text-xl font-bold'>{item.category}</h1>
+                                                            <p className='text-[16px]'>{d.toLocaleDateString()}</p>
+                                                            <p className='text-[14px]'>{
+                                                                d.toLocaleTimeString([], {
+                                                                    hour: "2-digit",
+                                                                    minute: "2-digit",
+                                                            })
+                                                            }</p>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        )
+                                    )}
                                 </div>
                             ):(
                                 <h1 className='text-center text-5xl text-[rgb(23,23,23)]'>Nothing Scheduled Today</h1>
