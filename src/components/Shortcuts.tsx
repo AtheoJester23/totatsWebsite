@@ -8,15 +8,8 @@ import { supabase } from "../supabaseClient"
 import { toast, ToastContainer } from "react-toastify"
 import { Dialog, DialogPanel } from "@headlessui/react"
 
-type wicType = {
-    id: string,
-    category: string,
-    createdat: string
-}[]
-
 const Shortcuts = () => {
     const isOpen = useSelector((state: RootState) => state.shop.isOpen);
-    const confWIC = useSelector((state: RootState) => state.shop.confWIC);
     const dispatch = useDispatch<AppDispatch>()
     const WIC = useSelector((state: RootState) => state.shop.WIC)
     const [delConf, setDelConf] = useState(false)
@@ -122,17 +115,25 @@ const Shortcuts = () => {
                 <div className={`h-[400px] bg-[rgb(7,7,7)] p-5 rounded overflow-auto ${WIC.length < 1 && "flex justify-center items-center"}`}>
                     {WIC.length > 0 ? (
                         <ul className="flex flex-col gap-5 w-full">
-                            {WIC.map(item => (
-                                <li key={item.id} className="bg-white p-5 rounded flex justify-between items-center">
-                                    <div >
-                                        <h1 className="font-bold text-xl">{item.category}</h1>
-                                        <p>{item.createdat}</p>
-                                    </div>
-                                    <button onClick={() => openConfDel(item.id)} className="hover:text-red-700 duration-200 cursor-pointer">
-                                        <X/>
-                                    </button>
-                                </li>
-                            ))}
+                            {WIC.map(item => {
+                                const d = new Date(item.createdat);
+
+                                return(
+                                    <li key={item.id} className="bg-white p-5 rounded flex justify-between items-center">
+                                        <div >
+                                            <h1 className="font-bold text-xl">{item.category}</h1>
+                                            <p>{`Date: ${d.toLocaleDateString()}`} </p>
+                                            <p>{`Time: ${ d.toLocaleTimeString([], {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}`}</p>
+                                        </div>
+                                        <button onClick={() => openConfDel(item.id)} className="hover:text-red-700 duration-200 cursor-pointer">
+                                            <X/>
+                                        </button>
+                                    </li>
+                                )
+                            })}
                         </ul>
                     ):(
                         <h1 className="text-[rgb(23,23,23)] font-bold text-3xl text-center">No walk-in clients</h1>

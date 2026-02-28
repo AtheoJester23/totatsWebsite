@@ -1,25 +1,20 @@
-import { Calendar, Eye, Footprints, Layers2, MessageCircleQuestion, Plus, Store, StoreIcon } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Calendar, Eye, Footprints, Layers2, Plus, Store, StoreIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../state/store";
-import { setConfWIC, setOpen, setWIC } from "../state/status/shopStats";
+import { setConfWIC, setOpen} from "../state/status/shopStats";
 import { supabase } from "../supabaseClient";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { toast, ToastContainer } from "react-toastify";
 import NewWIC from "../components/popups/NewWIC";
 
 
 const Dashboard = () => {
     const [_, setSelected] = useState("schedules")
     const isOpen = useSelector((state: RootState) => state.shop.isOpen);
-    const walkIn = useSelector((state: RootState) => state.shop.confWIC);
+    const wicList = useSelector((state: RootState) => state.shop.WIC);
     const dispatch = useDispatch<AppDispatch>()
     const id = import.meta.env.VITE_ID_SHOP_STATUS;
-
-    const [newWalkIn, setNewWalkIn] = useState<boolean>(false)
-
 
     const temporary = [
         {title: 'abc', date: "Jan 2", time: "3:07"},
@@ -59,35 +54,6 @@ const Dashboard = () => {
             dispatch(setOpen(!isOpen));
         } catch (error) {
             console.error((error as Error).message)
-        }
-    }
-
-    const handleAddNewWIC = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-        const category = formData.get("category")
-
-        console.log(category);
-
-        try {
-            const {data, error} = await supabase.from('walkinclients').insert({category});
-
-            if(error){
-                throw new Error(`${error.message}`)
-            }
-
-            console.log('Updated Successfully');
-            dispatch(setConfWIC(!walkIn));
-            toast.success("New Walk-In schedule created");
-            console.log(data);
-            
-            setNewWalkIn(false);
-        } catch (error) {
-            console.error((error as Error).message)
-            toast.error("Failed to create schedule")
-        } finally{
-            setNewWalkIn(false)
         }
     }
 
@@ -148,12 +114,12 @@ const Dashboard = () => {
                                         <Footprints size={15}/>
                                         <small>Walk-in Client:</small>
                                     </div>
-                                    <button onClick={() => dispatch(setConfWIC(!walkIn))} className="bg-white flex p-2 rounded gap-3 cursor-pointer duration-200 hover:bg-[rgb(8,8,8)] hover:text-white">
+                                    <button onClick={() => dispatch(setConfWIC(true))} className="bg-white flex p-2 rounded gap-3 cursor-pointer duration-200 hover:bg-[rgb(8,8,8)] hover:text-white">
                                         <Plus className=""/>
                                         <span className="font-bold">Add New</span>
                                     </button>
                                 </div>
-                                {temporary.length > 0 && (
+                                {wicList.length > 0 && (
                                     <NavLink to={"/dashboard/shortcut"} className="bg-gray-500 gap-3 text-white flex items-center p-2 rounded hover:bg-gray-700 duration-300 cursor-pointer">
                                         <Eye className="flex-none"/>
                                         <span className="flex-1 font-bold">Show Walk-in Clients</span>
@@ -169,7 +135,6 @@ const Dashboard = () => {
                 </div>
             </div>
             <NewWIC/>
-            <ToastContainer theme="dark"/>
         </>
     );
 }
