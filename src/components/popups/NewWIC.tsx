@@ -58,7 +58,7 @@ const NewWIC = () => {
                     dragMomentum={false}
                     initial={{opacity: 0}}
                     animate={{opacity: 1}}
-                    className="w-[500px] hover:cursor-grab active:cursor-grabbing bg-white p-5 rounded shadow-xl flex gap-3 flex-col"
+                    className="max-sm:w-[90%] w-[500px] hover:cursor-grab active:cursor-grabbing bg-white p-5 rounded shadow-xl flex gap-3 flex-col"
                 >   
                     <div className="flex gap-3 items-center">
                         <Footprints/>
@@ -68,10 +68,10 @@ const NewWIC = () => {
                         <div className="flex flex-col">
                             <label htmlFor="category" className="text-sm">Category:</label>
                             <select defaultValue={"unknown"} name="category" id="category" className="border py-2 px-3 rounded">
-                                <option value="unknown">Unknown</option>
-                                <option value="minimum">Minimum</option>
-                                <option value="backPiece">Back Piece</option>
-                                <option value="armSleeve">Outer/Inner Arm Sleeve</option>
+                                <option value="Unknown">Unknown</option>
+                                <option value="Minimum">Minimum</option>
+                                <option value="BackPiece">Back Piece</option>
+                                <option value="ArmSleeve">Outer/Inner Arm Sleeve</option>
                             </select>
                         </div>
                         <div className="flex gap-2 justify-end">

@@ -1,9 +1,9 @@
 import { Footprints, Layers2, Plus, StoreIcon, TriangleAlert, X } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, time } from "framer-motion"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setConfWIC, setOpen, setWIC } from "../state/status/shopStats"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import { supabase } from "../supabaseClient"
 import { toast, ToastContainer } from "react-toastify"
 import { Dialog, DialogPanel } from "@headlessui/react"
@@ -14,6 +14,7 @@ const Shortcuts = () => {
     const WIC = useSelector((state: RootState) => state.shop.WIC)
     const [delConf, setDelConf] = useState(false)
     const [targetDel, setTargetDel] = useState<string | null>(null);
+    const [upWIC, setUpWIC] = useState(false);
 
     useEffect(() => {
         const handleGetWIC = async () => {
@@ -56,6 +57,36 @@ const Shortcuts = () => {
             console.error((error as Error).message)
             toast.error("Failed to delete schedule")
         } 
+    }
+
+    const handleUpdateWIC = async (id: string, e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.currentTarget);
+        const category = formData.get("category");
+
+        try {
+            const upWICS = await supabase.from("walkinclients").update({category}).eq("id", id);
+
+            if(upWICS.error){
+                throw new Error(`${upWICS.error.message}`)
+            }
+
+            toast.success("Walk in schedule updated successfully!")
+
+            const getWICS = await supabase.from("walkinclients").select();
+
+            if(getWICS.error){
+                throw new Error(`${getWICS.error.message}`)
+            }
+
+            dispatch(setWIC(getWICS.data))
+        } catch (error) {
+            console.error((error as Error).message)
+            toast.error("Failed to update schedule")
+        } finally{
+            setUpWIC(false)
+        }
     }
 
   return (
@@ -119,7 +150,7 @@ const Shortcuts = () => {
                                 const d = new Date(item.createdat);
 
                                 return(
-                                    <li key={item.id} className="bg-white p-5 rounded flex justify-between items-center">
+                                    <li onClick={() => setUpWIC(true)} key={item.id} className="bg-white p-5 rounded flex justify-between items-center cursor-pointer active:cursor-default">
                                         <div >
                                             <h1 className="font-bold text-xl">{item.category}</h1>
                                             <p>{`Date: ${d.toLocaleDateString()}`} </p>
@@ -143,6 +174,7 @@ const Shortcuts = () => {
 
 
         </div>
+        {/* Delete WIC Pop up: */}
         <Dialog open={delConf} onClose={setDelConf} className={"bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 left-0 right-0 z-3000 flex justify-center items-center"}>  
             <DialogPanel>
                 <motion.div
@@ -150,7 +182,7 @@ const Shortcuts = () => {
                     dragMomentum={false}
                     initial={{opacity: 0}}
                     animate={{opacity: 1}}
-                    className="w-[500px] hover:cursor-grab active:cursor-grabbing bg-white p-5 rounded shadow-xl flex gap-3 flex-col"
+                    className="max-sm:w-[90%] w-[500px] hover:cursor-grab active:cursor-grabbing bg-white p-5 rounded shadow-xl flex gap-3 flex-col"
                 >   
                     <div className="flex gap-3 items-center">
                         <TriangleAlert/>
@@ -165,6 +197,39 @@ const Shortcuts = () => {
                 </motion.div>
             </DialogPanel>
         </Dialog>
+
+        {/* Update WIC Pop up: */}
+        <Dialog open={upWIC} onClose={() => setUpWIC} className={"bg-[rgba(0,0,0,0.5)] fixed top-0 bottom-0 left-0 right-0 z-3000 flex justify-center items-center"}>  
+            <DialogPanel>
+                <motion.div
+                    drag
+                    dragMomentum={false}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    className="max-sm:w-[90%] w-[500px] hover:cursor-grab active:cursor-grabbing bg-white p-5 rounded shadow-xl flex gap-3 flex-col"
+                >   
+                    <div className="flex gap-3 items-center">
+                        <Footprints/>
+                        <h1 className="font-bold text-xl">Create new Walk-in client</h1>
+                    </div>
+                    <form onSubmit={(e) => targetDel && handleUpdateWIC(targetDel, e)} className="flex flex-col gap-5">
+                        <div className="flex flex-col">
+                            <label htmlFor="category" className="text-sm">Category:</label>
+                            <select defaultValue={"unknown"} name="category" id="category" className="border py-2 px-3 rounded">
+                                <option value="Unknown">Unknown</option>
+                                <option value="Minimum">Minimum</option>
+                                <option value="BackPiece">Back Piece</option>
+                                <option value="ArmSleeve">Outer/Inner Arm Sleeve</option>
+                            </select>
+                        </div>
+                        <div className="flex gap-2 justify-end">
+                            <button className="bg-blue-500 text-white font-bold px-3 rounded py-1 hover:translate-y-0.5 duration-200 cursor-pointer">Confirm</button>
+                            <button type="button" onClick={() => setUpWIC(false)} className="bg-red-500 text-white font-bold px-3 rounded py-1 hover:translate-y-0.5 duration-200 cursor-pointer">Cancel</button>
+                        </div>
+                    </form>
+                </motion.div>
+            </DialogPanel>
+        </Dialog>   
         <ToastContainer theme="dark"/>
     </>
   )
