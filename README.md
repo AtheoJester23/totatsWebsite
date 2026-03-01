@@ -19,7 +19,10 @@ TOTATS provides a one-stop solution for tattoo studios to manage their operation
 The goal is to streamline administrative work, enhance client interaction, and boost overall studio productivity.
 
 ## Features
-![InShot_20260301_105945347](https://github.com/user-attachments/assets/52768030-b181-410a-8e46-a0fbbedf550d)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/52768030-b181-410a-8e46-a0fbbedf550d" alt="Demo GIF" width="600"/>
+</div>
+
 - **Appointment Scheduling**: Create, update, and manage client appointments with ease.
 - **Product Catalog**: Display available tattoo supplies such as tattoo machine cartridges, ointments, and stencil paper.
 - **AI Inquiry System**: An AI assistant that answers common client questions and provides information about the tattoo shop.
