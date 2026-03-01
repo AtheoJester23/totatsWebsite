@@ -1,15 +1,15 @@
-# TOTATS Tattoo Studio Administrative System
+<h1 align="center">TOTATS Tattoo Studio Administrative System</h1>
 
 TOTATS (Tattoo Studio Administrative Scheduling, Product Catalog, and AI Inquiry System) is a comprehensive web application designed to help tattoo studio to manage appointments, showcase products, and interact with clients using AI-powered inquiry handling.
 
-## Table of Contents
+## 📄 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Screenshots](#screenshots)
 - [License](#license)
 
-## Overview
+## 🔎Overview
 TOTATS provides a one-stop solution for tattoo studios to manage their operations efficiently. The system allows admins to:
 
 - Schedule and track client appointments
@@ -18,7 +18,7 @@ TOTATS provides a one-stop solution for tattoo studios to manage their operation
 
 The goal is to streamline administrative work, enhance client interaction, and boost overall studio productivity.
 
-## Features
+## ✨Features
 <div align="center">
   <img src="https://github.com/user-attachments/assets/52768030-b181-410a-8e46-a0fbbedf550d" alt="Demo GIF" width="600"/>
 </div>
@@ -29,17 +29,17 @@ The goal is to streamline administrative work, enhance client interaction, and b
 - **Admin Dashboard**: Centralized control for studio staff to manage operations.
 - **Responsive Design**: Accessible from desktops, tablets, and mobile devices.
 
-## Screenshots
+## 📸Screenshots
 
 <img width="1440" height="768" alt="image" src="https://github.com/user-attachments/assets/135ed824-1e25-4a4e-98c7-ce0bb09f258b" />
 <img width="1440" height="771" alt="image" src="https://github.com/user-attachments/assets/05b67d71-fe18-4998-93e4-d500e0b1fc10" />
 <img width="1439" height="767" alt="image" src="https://github.com/user-attachments/assets/35b91557-01d3-484e-b8b4-69e9dd858273" />
 <img width="1440" height="768" alt="image" src="https://github.com/user-attachments/assets/a0ed1845-3939-4fe6-a8c5-0086a257f84b" />
 
-## Technologies Used
-- **Frontend**: HTML, CSS, JavaScript, REACT.js, Tailwindcss, Framer motion, 
+## </>Technologies Used
+- **Frontend**: React.js, Tailwind CSS, Framer Motion, React Toastify, Headless UI, Redux
 - **Backend**: Supabase
-- **AI**: Gemini
+- **AI**: Google Gemini API
 
 ## License
 
