@@ -1,5 +1,5 @@
 import { Footprints, Layers2, Plus, StoreIcon, TriangleAlert, X } from "lucide-react"
-import { motion, time } from "framer-motion"
+import { motion } from "framer-motion"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setConfWIC, setOpen, setWIC } from "../state/status/shopStats"
