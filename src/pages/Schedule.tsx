@@ -104,38 +104,41 @@ const Schedule = () => {
                                             <p className='text-[14px]'>{to12Hour(item.time)}</p>
                                         </div>
                                     ))}
-                                    {wics.length > 0 && (
-                                        (
-                                            <div>
-                                                {wics.map(item => {
-                                                    const d = new Date(item.createdat);
-                                                    
-                                                    return (
-                                                        <div key={item.id} className={`border border-gray-500 rounded text-white p-5`}>
-                                                            
-                                                            <h1 className='text-xl font-bold'>{item.category}</h1>
-                                                            <p className='text-[16px]'>{d.toLocaleDateString()}</p>
-                                                            <p className='text-[14px]'>{
-                                                                d.toLocaleTimeString([], {
-                                                                    hour: "2-digit",
-                                                                    minute: "2-digit",
-                                                            })
-                                                            }</p>
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        )
-                                    )}
                                 </div>
-                            ):(
+                            ): today.length < 1 && wics.length < 1 ? (
                                 <h1 className='text-center text-5xl text-[rgb(23,23,23)]'>Nothing Scheduled Today</h1>
+                            ):(
+                                null
                             )}
                         </>
                     ):(
                         <div className='h-[50vh] flex justify-center items-center'>
                             <ClipLoader size={30} color='yellow'/>
                         </div>
+                    )}
+
+                    {wics.length > 0 && (
+                        (
+                            <div>
+                                {wics.map(item => {
+                                    const d = new Date(item.createdat);
+                                    
+                                    return (
+                                        <div key={item.id} className={`border border-gray-500 rounded text-white p-5`}>
+                                            
+                                            <h1 className='text-xl font-bold'>{item.category}</h1>
+                                            <p className='text-[16px]'>{d.toLocaleDateString()}</p>
+                                            <p className='text-[14px]'>{
+                                                d.toLocaleTimeString([], {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                            })
+                                            }</p>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )
                     )}
                 </div>
                 
