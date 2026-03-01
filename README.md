@@ -2,12 +2,12 @@
 
 TOTATS (Tattoo Studio Administrative Scheduling, Product Catalog, and AI Inquiry System) is a comprehensive web application designed to help tattoo studio to manage appointments, showcase products, and interact with clients using AI-powered inquiry handling.
 
-## 📄 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Screenshots](#screenshots)
-- [License](#license)
+## Table of Contents
+1. [Overview](#overview)  
+2. [Features](#features)  
+3. [Technologies Used](#technologies-used)  
+4. [Screenshots](#screenshots)  
+5. [License](#license)
 
 ## 🔎Overview
 TOTATS provides a one-stop solution for tattoo studios to manage their operations efficiently. The system allows admins to:
@@ -37,9 +37,17 @@ The goal is to streamline administrative work, enhance client interaction, and b
 <img width="1440" height="768" alt="image" src="https://github.com/user-attachments/assets/a0ed1845-3939-4fe6-a8c5-0086a257f84b" />
 
 ## </>Technologies Used
-- **Frontend**: React.js, Tailwind CSS, Framer Motion, React Toastify, Headless UI, Redux
-- **Backend**: Supabase
-- **AI**: Google Gemini API
+**Frontend:** React.js, Vite, Tailwind CSS  
+
+**UI & Animation:** Framer Motion, Headless UI (React)  
+
+**State Management:** Redux  
+
+**Notifications:** React Toastify  
+
+**Backend:** Supabase  
+
+**AI Integration:** Gemini API
 
 ## License
 
