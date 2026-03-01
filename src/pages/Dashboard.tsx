@@ -16,12 +16,6 @@ const Dashboard = () => {
     const dispatch = useDispatch<AppDispatch>()
     const id = import.meta.env.VITE_ID_SHOP_STATUS;
 
-    const temporary = [
-        {title: 'abc', date: "Jan 2", time: "3:07"},
-        {title: 'def', date: "Jan 3", time: "3:07"},
-        {title: 'ghi', date: "Jan 4", time: "3:07"}
-    ]
-
     useEffect(() => {
         const handleFetchStatus = async () => {
             try {
