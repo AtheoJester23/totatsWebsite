@@ -26,7 +26,7 @@ const Schedules = () => {
                     throw new Error(`${error}`)
                 }
 
-                console.log(data);
+                console.log(data.length);
 
                 setScheds(data)
             } catch (error) {
@@ -39,11 +39,9 @@ const Schedules = () => {
         getScheds();
     }, [])
 
-    console.log(scheds)
-
     return (  
-        <div className="flex flex-col gap-5 max-sm:p-2 p-5 text-white">
-            {!loading ? (
+        <div className="max-sm:h-[100%] flex flex-col gap-5 max-sm:p-5 p-5 text-white">
+            {!loading && scheds.length > 0 ?(
                 <div className="max-sm:h-[70vh] min-md:h-[79vh] overflow-y-auto flex flex-col max-sm:gap-3 gap-5 p-5">
                     {scheds.map((item) => (
                         <Link to={`/editSched/${item.id}`} key={item.id} className="border rounded p-5 relative">
@@ -55,6 +53,10 @@ const Schedules = () => {
                             </div>
                         </Link>
                     ))}
+                </div>
+            ):!loading && scheds.length <= 0 ? (
+                <div className="h-full min-md:h-[79vh] overflow-y-auto flex flex-col justify-center items-center max-sm:gap-3 gap-5 p-5">
+                    <h1 className="text-4xl font-bold text-[rgb(7,7,7)]">Nothing to see here</h1>
                 </div>
             ):(
                 <div className="text-white flex justify-center items-center h-[80vh]">
