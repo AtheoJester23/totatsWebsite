@@ -1,5 +1,9 @@
 <h1 align="center">TOTATS Tattoo Studio Administrative System</h1>
 
+<p align="center">
+  🌐 Live Website: <a href="https://totatstattoo.vercel.app/" target="_blank">https://totatstattoo.vercel.app/</a>
+</p>
+
 TOTATS (Tattoo Studio Administrative Scheduling, Product Catalog, and AI Inquiry System) is a comprehensive web application designed to help tattoo studio to manage appointments, showcase products, and interact with clients using AI-powered inquiry handling.
 
 ## Table of Contents
