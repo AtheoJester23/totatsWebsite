@@ -14,7 +14,7 @@ TOTATS (Tattoo Studio Administrative Scheduling, Product Catalog, and AI Inquiry
 5. [License](#license)
 
 ## 🔎Overview
-TOTATS provides a one-stop solution for tattoo studios to manage their operations efficiently. The system allows admins to:
+TOTATS provides a one-stop solution for the tattoo studio to manage their operations efficiently. The system allows admins to:
 
 - Schedule and track client appointments
 - Maintain and display a product catalog
