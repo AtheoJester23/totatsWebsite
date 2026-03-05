@@ -1,4 +1,4 @@
-import { PhilippinePeso, Plus } from "lucide-react"
+import { ChevronDown, PhilippinePeso, Plus } from "lucide-react"
 import type { RootState } from "../state/store"
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -55,8 +55,41 @@ const Products = ({setSelected}: ChildProps) => {
         getProducts();
     }, [])
 
+    // const quickSort = (arr: []) =>{
+    //     if(arr.length <= 1) return arr;
+
+    //     const pivot = arr[arr.length - 1];
+    //     const left = [];
+    //     const right = [];
+
+    //     for(let i = 0; i < arr.length - 1; i++){
+    //         if(arr[i] < pivot){
+    //             left.push(arr[i]);
+    //         }else{
+    //             right.push(arr[i])
+    //         }
+    //     }
+
+    //     return [...quickSort(left), pivot, ...quickSort(right)]
+    // }
+
+    // const lowHigh = () => {
+    //     if(!items || items.length <= 0) return;
+    //     // const sorted = items.map()
+    // }
+
     return (
-        <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-full max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-full overflow-y-auto max-sm:no-scrollbar p-5"}`}>
+        <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-full max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-full overflow-y-auto max-sm:no-scrollbar p-5"} flex flex-col gap-2`}>
+            <div className="flex justify-end gap-2 items-center">
+                <label htmlFor="Sort" className="text-sm text-gray-500">Sort By:</label>
+                <div className="relative">
+                    <select className="bg-white p-2 rounded appearance-none pe-10">
+                        <option value="lowToHigh" className="hover:bg-gray-500">Price low to high</option>
+                        <option value="highToLow">Price high to low</option>
+                    </select>
+                    <ChevronDown className="absolute top-[11px] right-2 text-gray-500" size={20}/>
+                </div>
+            </div>
             {!loading ? (
                 <div className="grid max-sm:grid-cols-2 grid-cols-5 max-sm:gap-5 gap-10 auto-rows-fr">
                         {currentDir == "dashboard" ? (
