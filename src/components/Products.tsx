@@ -1,7 +1,7 @@
 import { ChevronDown, PhilippinePeso, Plus } from "lucide-react"
 import type { RootState } from "../state/store"
 import { useSelector } from "react-redux";
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { supabase } from "../supabaseClient";
 import { ClipLoader } from "react-spinners";
 import { Link, useLocation } from "react-router-dom";
