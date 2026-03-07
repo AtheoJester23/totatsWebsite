@@ -1,4 +1,4 @@
-import { ChevronDown, PhilippinePeso, Plus } from "lucide-react"
+import { ChevronDown, PhilippinePeso, Plus, Search } from "lucide-react"
 import type { RootState } from "../state/store"
 import { useSelector } from "react-redux";
 import { useEffect, useState, type ChangeEvent } from "react";
@@ -37,13 +37,14 @@ const Products = ({setSelected}: ChildProps) => {
             
             try {
                 setLoading(true);
-                const {data, error} = await supabase.from("products").select();
+                const {data, error} = await supabase.from("products").select().order("price", {ascending: true});
     
                 if(error){
                     throw new Error(`${error.message}`)
                 }
 
                 console.log(data)
+                
                 setItems(data);
             } catch (error) {
                 console.error((error as Error).message)
@@ -84,14 +85,22 @@ const Products = ({setSelected}: ChildProps) => {
 
     return (
         <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-full max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-full overflow-y-auto max-sm:no-scrollbar p-5"} flex flex-col gap-2`}>
-            <div className="flex justify-end gap-2 items-center">
-                <label htmlFor="Sort" className="text-sm text-gray-500">Sort By:</label>
-                <div className="relative">
-                    <select onChange={(e) => handleSort(e)} className="bg-white p-2 rounded appearance-none pe-10">
-                        <option value="lowHigh" className="hover:bg-gray-500">Price low to high</option>
-                        <option value="highLow">Price high to low</option>
-                    </select>
-                    <ChevronDown className="absolute top-[11px] right-2 text-gray-500" size={20}/>
+            <div className="relative w-full flex justify-center items-center gap-2">
+                <div className="flex">
+                    <input type="text" className="bg-white rounded-s px-5 py-2 focus:outline-none" placeholder="Search in Totats shop"/>
+                    <div className="bg-green-500 flex justify-center items-center px-3 rounded-e cursor-pointer hover:text-white duration-200">
+                        <Search/>
+                    </div>
+                </div>
+                <div className="absolute top-0 right-0 flex items-center gap-3 ">
+                    <label htmlFor="Sort" className="text-sm text-gray-500">Sort By:</label>
+                    <div className="relative">
+                        <select onChange={(e) => handleSort(e)} className="bg-white p-2 rounded appearance-none pe-10">
+                            <option value="lowHigh" className="hover:bg-gray-500">Price low to high</option>
+                            <option value="highLow">Price high to low</option>
+                        </select>
+                        <ChevronDown className="absolute top-[11px] right-2 text-gray-500" size={20}/>
+                    </div>
                 </div>
             </div>
             {!loading ? (
