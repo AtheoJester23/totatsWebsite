@@ -1,7 +1,7 @@
 import { ChevronDown, PhilippinePeso, Plus, Search } from "lucide-react"
 import type { RootState } from "../state/store"
 import { useSelector } from "react-redux";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { supabase } from "../supabaseClient";
 import { ClipLoader } from "react-spinners";
 import { Link, useLocation } from "react-router-dom";
@@ -32,30 +32,27 @@ const Products = ({setSelected}: ChildProps) => {
     const currentDir = location.pathname.split("/")[1];
 
 
-    useEffect(() => {
-        const getProducts = async () => {
-            
-            try {
-                setLoading(true);
-                const {data, error} = await supabase.from("products").select().order("price", {ascending: true});
-    
-                if(error){
-                    throw new Error(`${error.message}`)
-                }
+    const getProducts = async () => {
+        
+        try {
+            setLoading(true);
+            const {data, error} = await supabase.from("products").select().order("price", {ascending: true});
 
-                console.log(data)
-                
-                setItems(data);
-            } catch (error) {
-                console.error((error as Error).message)
-            }finally{
-                setLoading(false)
+            if(error){
+                throw new Error(`${error.message}`)
             }
+
+            console.log(data)
+            
+            setItems(data);
+        } catch (error) {
+            console.error((error as Error).message)
+        }finally{
+            setLoading(false)
         }
+    }
 
-        getProducts();
-    }, [])
-
+    
     const quickSort = (arr: productsType, typeSort: string): productsType =>{
         if(arr.length <= 1) return arr;
 
@@ -83,15 +80,37 @@ const Products = ({setSelected}: ChildProps) => {
         setItems(res);
     }
 
+    const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+        if(!items || items.length <= 0) return;
+
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget)
+        const target = formData.get("target") as string;
+
+        const filtered = items.filter(item => item.name.toLowerCase().includes(target.toLowerCase()))
+        setItems(filtered);
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, [])
+
     return (
         <div className={`${currentDir == "shop" ? "h-[670px] max-sm:h-full max-sm:p-5 overflow-y-auto max-sm:no-scrollbar p-5" : "h-[670px] max-sm:h-full overflow-y-auto max-sm:no-scrollbar p-5"} flex flex-col gap-2`}>
             <div className="relative w-full flex justify-center items-center gap-2">
-                <div className="flex">
-                    <input type="text" className="bg-white rounded-s px-5 py-2 focus:outline-none" placeholder="Search in Totats shop"/>
-                    <div className="bg-green-500 flex justify-center items-center px-3 rounded-e cursor-pointer hover:text-white duration-200">
+                <form onSubmit={(e) => handleSearch(e)} className="flex">
+                    <input 
+                        type="text" 
+                        onChange={(e) => e.currentTarget.value == "" && getProducts()} 
+                        name="target" 
+                        className="bg-white rounded-s px-5 py-2 focus:outline-none" 
+                        placeholder="Search in Totats shop"
+                    />
+                    <button className="bg-green-500 flex justify-center items-center px-3 rounded-e cursor-pointer hover:text-white duration-200">
                         <Search/>
-                    </div>
-                </div>
+                    </button>
+                </form>
                 <div className="absolute top-0 right-0 flex items-center gap-3 ">
                     <label htmlFor="Sort" className="text-sm text-gray-500">Sort By:</label>
                     <div className="relative">
@@ -103,7 +122,7 @@ const Products = ({setSelected}: ChildProps) => {
                     </div>
                 </div>
             </div>
-            {!loading ? (
+            {!loading && items && items.length >= 1 ? (
                 <div className="grid max-sm:grid-cols-2 grid-cols-5 max-sm:gap-5 gap-10 auto-rows-fr">
                         {currentDir == "dashboard" ? (
                             <>
@@ -150,7 +169,11 @@ const Products = ({setSelected}: ChildProps) => {
                             </>
                         )}
                 </div>
-            ) : (
+            ) : !loading && items && items.length <= 0 ? (
+                <div className="grid place-items-center w-full h-full">
+                    <h1 className="font-bold text-4xl text-[rgb(23,23,23)]">No matched item...</h1>
+                </div>
+            ):(
                 <div className="grid place-items-center w-full h-full">
                     <ClipLoader className="text-red-500" color="yellow"/>
                 </div>
